@@ -31,5 +31,6 @@ int main(void)
 	function();
 	function();
 	function();
+	function();
 	return (0);
 }
