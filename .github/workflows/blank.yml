@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: C/C++ Linter
-        run: echo Running linter
         uses: cpp-linter/cpp-linter-action@v2.6.0
         with:
           thread-comments: true
