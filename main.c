@@ -1,9 +1,21 @@
 #include <pthread.h>
 #include <time.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+int	function()
+{
+	char	*str = malloc(1000);
+	int		*test;
+
+	test = NULL;
+	*test = 1;
+	return (0);
+}
 
 int main(void)
 {
-	printf("philosophers\n");
+	printf("testing linter\n");
+	function();
 	return (0);
 }
