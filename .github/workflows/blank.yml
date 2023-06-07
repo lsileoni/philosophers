@@ -9,19 +9,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  cpp-linter:
+  clang-tidy:
+    name: clang-tidy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: make
-        run: make
-      - uses: cpp-linter/cpp-linter-action@v2
-        id: linter
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          style: ''
-
-      - name: Fail fast?!
-        if: steps.linter.outputs.checks-failed > 0
-        run: echo "Some files failed the linting checks!"
+      - name: clang-tidy check
+        uses: smay1613/clang-tidy-action@master
+    env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
