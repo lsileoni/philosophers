@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        run: echo Running linter
+      - name: C/C++ Linter
+        uses: cpp-linter/cpp-linter-action@v2.6.0
+        with:
+          thread-comments: true
