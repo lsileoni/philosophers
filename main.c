@@ -17,5 +17,19 @@ int main(void)
 {
 	printf("testing linter again\n");
 	function();
+	function();
+	function();
+	function();
+	function();
+	function();
+	function();
+	function();
+	function();
+	function();
+	function();
+	function();
+	function();
+	function();
+	function();
 	return (0);
 }
