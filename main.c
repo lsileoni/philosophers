@@ -15,7 +15,7 @@ int	function()
 
 int main(void)
 {
-	printf("testing linter\n");
+	printf("testing linter again\n");
 	function();
 	return (0);
 }
