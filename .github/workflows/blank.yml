@@ -14,6 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: make philosophers
-        run: make if [ $? -ne 0 ]; then echo "::error::Command failed - [Insert failure indicator here]"; fi
+        run: make if [ $? -ne 0 ]; then echo "::error::Command failed - ❌"; fi
       - name: success
         run: echo "Success"
