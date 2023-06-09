@@ -5,6 +5,7 @@
 
 int	function()
 {
+	char	*unused;
 	int		*test;
 
 	test = NULL;
