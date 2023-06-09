@@ -5,7 +5,6 @@
 
 int	function()
 {
-	char	*str = malloc(1000);
 	int		*test;
 
 	test = NULL;
@@ -16,21 +15,6 @@ int	function()
 int main(void)
 {
 	printf("testing linter again\n");
-	function();
-	function();
-	function();
-	function();
-	function();
-	function();
-	function();
-	function();
-	function();
-	function();
-	function();
-	function();
-	function();
-	function();
-	function();
 	function();
 	return (0);
 }
