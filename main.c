@@ -1,21 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/06/12 14:24:25 by lsileoni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <pthread.h>
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-int	function()
+int	main(void)
 {
-	char	*unused;
-	int		*test;
-
-	test = NULL;
-	*test = 1;
-	return (0);
-}
-
-int main(void)
-{
-	printf("testing linter again\n");
-	function();
+	printf("Fixed!\n");
 	return (0);
 }
