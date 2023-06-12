@@ -3,20 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	function()
-{
-	char	*unused;
-	int		*test;
-
-	test = NULL;
-	*test = 1;
-	return (0);
-}
-
 int main(void)
 {
-	printf("testing linter again\n");
-	function();
-	function();
+	printf("Fixed!\n");
 	return (0);
 }
