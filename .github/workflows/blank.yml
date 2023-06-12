@@ -22,3 +22,11 @@ jobs:
           fi
       - name: success
         run: echo "Success"
+  norminette:
+    runs-on: ubuntu-latest
+    name: norminette
+    steps:
+    - uses: actions/checkout@v2
+    - uses: alexandregv/norminette-action@v3
+      with:
+        flags: '.'
