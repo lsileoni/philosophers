@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: make philosophers
         run: |
-          make
+          make -C ./philo/
           if [ $? -ne 0 ]
           then
             echo "::error::Command failed - ❌"
