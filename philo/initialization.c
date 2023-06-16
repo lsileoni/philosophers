@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 19:27:39 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/16 19:28:04 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:31:29 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	assign_forks(pthread_mutex_t *forks, t_philo *philos, size_t n)
 
 int	init_philos(t_philo **philos, const t_args *args)
 {
-	pthread_mutex_t *forks;
+	pthread_mutex_t	*forks;
 
 	*philos = ft_calloc(sizeof(t_philo), args->philo_count);
 	if (!(*philos))
