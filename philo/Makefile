@@ -1,6 +1,6 @@
 NAME=philosophers
 LIBFT=./libft/build/libft.a
-SRC=main.c argument_parsing.c
+SRC=main.c argument_parsing.c initialization.c
 OBJ := $(SRC:.c=.o)
 DEP := $(OBJ:%.o=%.d)
 
