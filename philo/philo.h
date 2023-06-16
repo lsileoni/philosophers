@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/16 17:13:39 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:28:56 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_args
 
 typedef struct s_philo
 {
-	t_args			*params;
+	t_args			params;
 	pthread_mutex_t *left_fork;
 	pthread_mutex_t *right_fork;
 	unsigned int	ms_state;
@@ -51,5 +51,6 @@ typedef struct s_philo
 }	t_philo;
 
 t_args	parse_args(int argc, char **argv);
+int	init_philos(t_philo **philos, const t_args *args);
 
 #endif
