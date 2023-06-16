@@ -1,0 +1,18 @@
+[
+ {
+  "directory": "/Users/lsileoni/Documents/42_main/philosophers/philo",
+  "arguments": [
+   "cc",
+   "main.c",
+   "-o",
+   "philosophers",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-L./libft/build",
+   "-lft",
+   "-I./libft/src/"
+  ],
+  "file": "main.c"
+ }
+]
