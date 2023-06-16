@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/16 15:35:11 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/06/16 17:13:39 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@
 
 enum e_state
 {
-	DEAD,
-	THINKING,
-	DONE,
-	EATING,
-	SLEEPING
+	P_DEAD,
+	P_THINKING,
+	P_DONE,
+	P_EATING,
+	P_SLEEPING,
+	P_UNINITIALIZED
 };
 
 typedef struct s_args
@@ -42,6 +43,8 @@ typedef struct s_args
 typedef struct s_philo
 {
 	t_args			*params;
+	pthread_mutex_t *left_fork;
+	pthread_mutex_t *right_fork;
 	unsigned int	ms_state;
 	unsigned char	times_eaten;
 	unsigned char	state;
