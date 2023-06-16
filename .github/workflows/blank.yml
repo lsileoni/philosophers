@@ -1,4 +1,4 @@
-name: Make test
+name: CI
 
 on:
   push:
