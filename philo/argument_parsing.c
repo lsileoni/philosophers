@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:00 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/16 16:18:20 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:27:55 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 static int	assign_philo_value(size_t *value, char *arg)
 {
 	int	tmp;
+
 	tmp = ft_atoi(arg);
 	if (tmp < 1)
 		return (0);
