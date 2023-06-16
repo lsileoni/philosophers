@@ -25,3 +25,5 @@ fclean:
 	make fclean -C ./libft/
 	rm -f $(OBJ)
 	rm -f $(NAME)
+
+re: fclean all
