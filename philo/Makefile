@@ -1,6 +1,6 @@
 NAME=philosophers
 LIBFT=./libft/build/libft.a
-SRC=main.c argument_parsing.c
+SRC=main.c argument_parsing.c initialization.c
 OBJ := $(SRC:.c=.o)
 DEP := $(OBJ:%.o=%.d)
 
@@ -12,10 +12,13 @@ $(NAME): $(LIBFT) $(OBJ)
 -include $(DEP)
 
 $(OBJ): $(SRC)
-	cc -c $(SRC) -Wall -Wextra -Werror -I./libft/src/
+	cc -c $(SRC) -Wall -Wextra -Werror -g -I./libft/src/
 
 $(LIBFT):
 	make all -C ./libft/
+
+debug: $(LIBFT) $(OBJ)
+	cc $(OBJ) -o philosophers -Wall -Wextra -Werror -L./libft/build -lft -I./libft/src/ -fsanitize=address
 
 clean:
 	rm -f $(OBJ)
