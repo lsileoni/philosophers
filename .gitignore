@@ -1,3 +1,5 @@
 philosophers
 philo/.cache/clangd/index
 philo/libft/build/libft.a
+philo/libft/obj
+philo/*.o

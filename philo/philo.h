@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/16 14:18:45 by lsileoni         ###   ########.fr       */
+/*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/06/16 14:16:19 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#ifndef PHILO_H
+# define PHILO_H
+# include "libft.h"
+# include <pthread.h>
+# include <stddef.h>
+# include <time.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include "libft.h"
 
-int	main(int argc, char **argv)
+typedef struct s_args
 {
-	const t_args	args = parse_args(argc, argv);
+	size_t	philo_count;
+	size_t	ttd;
+	size_t	tte;
+	size_t	tts;
+	size_t	eating_times;
+	size_t	set;
+}	t_args;
 
-	if (!args.set)
-		ft_printf("Issue in parsing arguments!\n");
-	return (0);
-}
+t_args	parse_args(int argc, char **argv);
+
+#endif
