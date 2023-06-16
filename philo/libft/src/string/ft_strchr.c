@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/12 14:24:25 by lsileoni         ###   ########.fr       */
+/*   Created: 2022/11/02 06:53:49 by lsileoni          #+#    #+#             */
+/*   Updated: 2022/11/03 22:55:52 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-#include <time.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "../libft.h"
 
-int	main(void)
+char	*ft_strchr(const char *s, int c)
 {
-	printf("Fixed!\n");
-	return (0);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (c)
+		return (NULL);
+	return ((char *)s);
 }
