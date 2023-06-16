@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/16 14:16:19 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:35:11 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
 # include <stdlib.h>
 # include "libft.h"
 
+enum e_state
+{
+	DEAD,
+	THINKING,
+	DONE,
+	EATING,
+	SLEEPING
+};
+
 typedef struct s_args
 {
 	size_t	philo_count;
@@ -29,6 +38,14 @@ typedef struct s_args
 	size_t	eating_times;
 	size_t	set;
 }	t_args;
+
+typedef struct s_philo
+{
+	t_args			*params;
+	unsigned int	ms_state;
+	unsigned char	times_eaten;
+	unsigned char	state;
+}	t_philo;
 
 t_args	parse_args(int argc, char **argv);
 
