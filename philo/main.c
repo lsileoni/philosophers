@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/13 15:39:40 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/06/16 13:20:16 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_args
 	size_t	tte;
 	size_t	eating_times;
 	size_t	set;
-} t_args;
+}	t_args;
 
 // int	init_mutexes(int num)
 // {
@@ -35,7 +35,7 @@ typedef struct s_args
 
 t_args	parse_args(int argc, char **argv)
 {
-	t_args args;
+	t_args	args;
 
 	(void) argv;
 	ft_bzero(&args, sizeof(args));
