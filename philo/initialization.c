@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 19:27:39 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/29 14:01:13 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/06/30 13:37:09 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static int	assign_forks(pthread_mutex_t *forks, t_philo *philos, size_t n)
 	philos[i].left_fork = (&forks)[i];
 	philos[i].right_fork = (&forks)[0];
 	philos[i].state = P_UNINITIALIZED;
+	philos[i].simulation = simulation;
+	philos[i].print = print;
 	return (1);
 }
 

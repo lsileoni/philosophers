@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/29 14:14:19 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/06/30 17:51:22 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,83 @@ int	lock_forks(t_philo *philos, size_t philo_count)
 	return (1);
 }
 
+void	sleep_one_ms(void)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < 10)
+	{
+		usleep(100);
+		i++;
+	}
+}
+
+void	sleep_n_ms(size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		sleep_one_ms();
+		i++;
+	}
+}
+
+size_t	assign_bound(unsigned int state, t_args args)
+{
+	if (state == P_THINKING)
+		return (args.ttd);
+	if (state == P_SLEEPING)
+		return (args.tts);
+	if (state == P_EATING)
+		return (args.tte);
+	return (0);
+}
+
+
 void	*philosopher_simulation(void *arg)
 {
-	(void)arg;
+	t_philo			*philo;
+	int				contested;
+	size_t			sleep_bound;
 
+	contested = 1;
+	philo = arg;
+	sleep_bound = 0;
+	printf("philo addr: %p\n", philo);
 	while (1)
 	{
-		printf("Hi I am philosopher\n");
-		sleep(1);
+		if (contested)
+		{
+			if (pthread_mutex_lock(philo->simulation) == 0)
+			{
+				if (pthread_mutex_unlock(philo->simulation) == 0)
+					contested = 0;
+			}
+			usleep(300);
+		}
+		else
+		{
+			while (philo->state != P_DONE)
+			{
+				sleep_bound = assign_bound(philo->state, philo->params);
+				while (1)
+				{
+					if (philo->state == P_UNINITIALIZED)
+						philo->state = P_THINKING;
+					if (philo->ms_state >= sleep_bound)
+						break ;
+					if (pthread_mutex_lock(philo->simulation) != 0)
+						return (0);
+					else
+						pthread_mutex_unlock(philo->simulation);
+					sleep_one_ms();
+					philo->ms_state += 1;
+				}
+			}
+		}
 	}
 	return (NULL);
 }
@@ -62,6 +131,7 @@ int	begin_simulation(t_philo *philos, t_args args)
 		pthread_create(&threads[i], NULL, philosopher_simulation, &philos[i]);
 		i++;
 	}
+	pthread_mutex_unlock(philos[0].simulation);
 	i = 0;
 	while (i < args.philo_count)
 	{
