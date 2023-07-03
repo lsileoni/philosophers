@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/06/29 13:54:01 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/03 17:40:53 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*simulation;
 	pthread_mutex_t	*print;
+	unsigned int	id;
 	unsigned int	ms_state;
 	unsigned char	times_eaten;
 	unsigned char	state;
+	unsigned char	record;
 }	t_philo;
 
 t_args	parse_args(int argc, char **argv);
-int		init_philos(t_philo **philos, const t_args *args);
+int		init_philos(t_philo **philos, const t_args args);
 
 #endif

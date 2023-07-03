@@ -7,7 +7,7 @@ DEP := $(OBJ:%.o=%.d)
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	cc $(OBJ) -o philosophers -Wall -Wextra -Werror -g -L./libft/build -lft -I./libft/src/
+	cc $(OBJ) -o philosophers -Wall -Wextra -Werror -Ofast -march=native -L./libft/build -lft -I./libft/src/
 
 -include $(DEP)
 
@@ -18,7 +18,7 @@ $(LIBFT):
 	make all -C ./libft/
 
 debug: $(LIBFT) $(OBJ)
-	cc $(OBJ) -o philosophers -Wall -Wextra -Werror -L./libft/build -lft -I./libft/src/ -fsanitize=address
+	cc $(OBJ) -o philosophers -Wall -Wextra -Werror -L./libft/build -lft -I./libft/src/
 
 clean:
 	rm -f $(OBJ)
