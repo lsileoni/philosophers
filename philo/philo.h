@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/03 17:40:53 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/13 02:05:37 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdlib.h>
 # include "libft.h"
 
-enum e_state
+enum e_philo_state
 {
 	P_DEAD,
 	P_THINKING,
@@ -28,6 +28,13 @@ enum e_state
 	P_EATING,
 	P_SLEEPING,
 	P_UNINITIALIZED
+};
+
+enum e_sim_state
+{
+	S_UNINITIALIZED,
+	S_STARTED,
+	S_DONE
 };
 
 typedef struct s_args
@@ -47,11 +54,14 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*simulation;
 	pthread_mutex_t	*print;
+	size_t			*timestamp;
+	size_t			*simulation_state;
 	unsigned int	id;
 	unsigned int	ms_state;
-	unsigned char	times_eaten;
+	unsigned int	times_eaten;
 	unsigned char	state;
 	unsigned char	record;
+	unsigned char	eating_flag;
 }	t_philo;
 
 t_args	parse_args(int argc, char **argv);
