@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/13 02:05:37 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/13 23:50:26 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_philo
 	pthread_mutex_t	*print;
 	size_t			*timestamp;
 	size_t			*simulation_state;
+	size_t			*simulation_start;
+	size_t			time_since_eating;
 	unsigned int	id;
 	unsigned int	ms_state;
 	unsigned int	times_eaten;
@@ -66,5 +68,7 @@ typedef struct s_philo
 
 t_args	parse_args(int argc, char **argv);
 int		init_philos(t_philo **philos, const t_args args);
+size_t	get_current_ms(void);
+void	synchronized_sleep(size_t n_ms);
 
 #endif

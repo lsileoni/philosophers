@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 19:27:39 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/13 04:55:10 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/13 23:13:22 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ static int	assign_forks(pthread_mutex_t *forks, t_philo *philos, t_args args, si
 	size_t			i;
 	size_t			*timestamp;
 	size_t			*simulation_state;
+	size_t			*simulation_start;
 	pthread_mutex_t	*simulation;
 	pthread_mutex_t	*print;
 
+	simulation_start = malloc(sizeof(size_t *));
+	*simulation_start = 0;
 	timestamp = malloc(sizeof(size_t *));
 	*timestamp = 0;
 	if (!timestamp)
@@ -82,6 +85,8 @@ static int	assign_forks(pthread_mutex_t *forks, t_philo *philos, t_args args, si
 		philos[i].ms_state = 0;
 		philos[i].simulation = simulation;
 		philos[i].simulation_state = simulation_state;
+		philos[i].simulation_start = simulation_start;
+		philos[i].time_since_eating = 0;
 		philos[i].print = print;
 		philos[i].id = i + 1;
 		philos[i].timestamp = timestamp;
@@ -94,6 +99,8 @@ static int	assign_forks(pthread_mutex_t *forks, t_philo *philos, t_args args, si
 	philos[i].state = P_THINKING;
 	philos[i].simulation = simulation;
 	philos[i].simulation_state = simulation_state;
+	philos[i].simulation_start = simulation_start;
+	philos[i].time_since_eating = 0;
 	philos[i].timestamp = timestamp;
 	philos[i].print = print;
 	philos[i].id = i + 1;
