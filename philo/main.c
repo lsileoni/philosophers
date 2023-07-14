@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/14 01:52:39 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/14 04:11:28 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,30 +38,6 @@ int	unlock_forks(t_philo *philos, size_t philo_count)
 	return (1);
 }
 
-void	sleep_one_ms(void)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < 10)
-	{
-		usleep(100);
-		i++;
-	}
-}
-
-void	sleep_n_ms(size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		sleep_one_ms();
-		i++;
-	}
-}
-
 size_t	assign_bound(unsigned int state, t_args args)
 {
 	if (state == P_THINKING)
@@ -73,13 +49,6 @@ size_t	assign_bound(unsigned int state, t_args args)
 	return (0);
 }
 
-int	philo_check_death(t_philo *philo)
-{
-	if ((get_current_ms() - philo->time_since_eating) >= philo->params.ttd)
-		return (1);
-	return (0);
-}
-
 size_t	philo_get_timestamp(t_philo *philo)
 {
 	return (get_current_ms() - *(philo->simulation_start));
@@ -87,60 +56,38 @@ size_t	philo_get_timestamp(t_philo *philo)
 
 int	try_print(t_philo *philo, const char *message)
 {
-	size_t	start_time;
-
-	start_time = get_current_ms();
-	if (pthread_mutex_lock(philo->simulation) != 0)
-		return (-1);
-	else
-	{
-		if (*(philo->simulation_state) == S_DONE)
-		{
-			pthread_mutex_unlock(philo->simulation);
-			return (0);
-		}
-		printf("%zu %d %s\n", philo_get_timestamp(philo), philo->id, message);
-		pthread_mutex_unlock(philo->simulation);
-	}
-	philo->time_since_eating += get_current_ms() - start_time;
+	if (*(philo->simulation_state) == S_DONE)
+		return (0);
+	printf("%zu %d %s\n", philo_get_timestamp(philo), philo->id, message);
 	return (1);
 }
 
-int	try_lock(t_philo *philo, const char *message)
+int	philo_check_death(t_philo *philo)
 {
-	if (pthread_mutex_lock(philo->simulation) != 0)
-		return (0);
-	else
+	if ((get_current_ms() - philo->time_since_eating) >= philo->params.ttd)
 	{
-		if (*(philo->simulation_state) == S_DONE)
-		{
-			pthread_mutex_unlock(philo->simulation);
-			return (0);
-		}
-		printf("%zu %d %s\n", philo_get_timestamp(philo), philo->id, message);
-		*(philo->simulation_state) = S_DONE;
-		philo->state = P_DEAD;
-		pthread_mutex_unlock(philo->simulation);
+		try_print(philo, "died");
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	try_thinking(t_philo *philo)
 {
-	if (!try_print(philo, "THINKING"))
+	if (!try_print(philo, "is thinking"))
 		return (0);
 	if (philo->id % 2)
 	{
 		if (pthread_mutex_lock(philo->left_fork) != 0)
 			return (0);
-		if (try_print(philo, "TOOK LEFT FORK") <= 0)
+		if (try_print(philo, "has taken a fork") <= 0)
 		{
 			pthread_mutex_unlock(philo->left_fork);
 			return (0);
 		}
 		if (philo_check_death(philo))
 		{
-			(void)try_lock(philo, "DIED");
+			philo->state = P_DEAD;
 			pthread_mutex_unlock(philo->left_fork);
 			return (0);
 		}
@@ -149,7 +96,7 @@ int	try_thinking(t_philo *philo)
 			pthread_mutex_unlock(philo->left_fork);
 			return (0);
 		}
-		if (try_print(philo, "TOOK RIGHT FORK") <= 0)
+		if (try_print(philo, "has taken a fork") <= 0)
 		{
 			pthread_mutex_unlock(philo->right_fork);
 			pthread_mutex_unlock(philo->left_fork);
@@ -160,14 +107,14 @@ int	try_thinking(t_philo *philo)
 	{
 		if (pthread_mutex_lock(philo->right_fork) != 0)
 			return (0);
-		if (try_print(philo, "TOOK RIGHT FORK") <= 0)
+		if (try_print(philo, "has taken a fork") <= 0)
 		{
 			pthread_mutex_unlock(philo->right_fork);
 			return (0);
 		}
 		if (philo_check_death(philo))
 		{
-			(void)try_lock(philo, "DIED");
+			philo->state = P_DEAD;
 			pthread_mutex_unlock(philo->right_fork);
 			return (0);
 		}
@@ -176,7 +123,7 @@ int	try_thinking(t_philo *philo)
 			pthread_mutex_unlock(philo->right_fork);
 			return (0);
 		}
-		if (try_print(philo, "TOOK LEFT FORK") <= 0)
+		if (try_print(philo, "has taken a fork") <= 0)
 		{
 			pthread_mutex_unlock(philo->right_fork);
 			pthread_mutex_unlock(philo->left_fork);
@@ -189,7 +136,7 @@ int	try_thinking(t_philo *philo)
 
 int	try_eating(t_philo *philo)
 {
-	if (try_print(philo, "EATING") <= 0)
+	if (try_print(philo, "is eating") <= 0)
 	{
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
@@ -197,7 +144,7 @@ int	try_eating(t_philo *philo)
 	}
 	if (philo_check_death(philo))
 	{
-		(void)try_lock(philo, "DIED");
+		philo->state = P_DEAD;
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
 		return (0);
@@ -213,7 +160,7 @@ int	try_eating(t_philo *philo)
 
 int	try_sleeping(t_philo *philo)
 {
-	if (try_print(philo, "SLEEPING") <= 0)
+	if (try_print(philo, "is sleeping") <= 0)
 		return (0);
 	synchronized_sleep(philo->params.tts);
 	philo->state = P_THINKING;
@@ -223,18 +170,29 @@ int	try_sleeping(t_philo *philo)
 void	*philosopher_simulation(void *arg)
 {
 	t_philo			*philo;
+	unsigned char	first_iter;
 
 	philo = arg;
+	first_iter = 0;
 	while (*(philo->simulation_state) != S_STARTED)
 		usleep(10);
 	if (philo->id % 2)
-		usleep(500);
+		synchronized_sleep(5);
+	if (philo->params.philo_count == 1)
+	{
+		try_print(philo, "is thinking");
+		try_print(philo, "has taken a fork");
+		synchronized_sleep(philo->params.ttd);
+		try_print(philo, "died");
+		philo->state = P_DEAD;
+		return (NULL);
+	}
 	philo->time_since_eating = get_current_ms();
 	while (philo->state != P_DONE)
 	{
 		if (philo->state == P_THINKING)
 		{
-			if (philo->params.philo_count % 2)
+			if (philo->params.philo_count % 2 && first_iter)
 				synchronized_sleep(philo->params.tte - 10);
 			if (!try_thinking(philo))
 				return (NULL);
@@ -247,6 +205,7 @@ void	*philosopher_simulation(void *arg)
 			}
 			if (!try_sleeping(philo))
 				return (NULL);
+			first_iter = 1;
 		}
 	}
 	return (NULL);
@@ -266,14 +225,21 @@ int	begin_simulation(t_philo *philos, t_args args)
 		pthread_create(&threads[i], NULL, philosopher_simulation, &philos[i]);
 		i++;
 	}
+	pthread_mutex_lock(philos[0].simulation);
 	*(philos[0].simulation_state) = S_STARTED;
 	*(philos[0].simulation_start) = get_current_ms();
+	pthread_mutex_unlock(philos[0].simulation);
 	while (*(philos[0].simulation_state) != S_DONE)
 	{
 		philos_done = 0;
 		i = 0;
 		while (i < args.philo_count)
 		{
+			if (philos[i].state == P_DEAD)
+			{
+				*(philos[0].simulation_state) = S_DONE;
+				break ;
+			}
 			if (philos[i].state == P_DONE)
 				philos_done++;
 			i++;
@@ -287,7 +253,6 @@ int	begin_simulation(t_philo *philos, t_args args)
 		pthread_join(threads[i], NULL);
 		i++;
 	}
-	printf("SIMULATION END!\n");
 	return (1);
 }
 

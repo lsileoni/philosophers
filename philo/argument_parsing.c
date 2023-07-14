@@ -6,12 +6,11 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:00 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/03 15:12:14 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/14 03:58:56 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stddef.h>
 
 static int	assign_philo_value(size_t *value, char *arg)
 {
@@ -48,12 +47,6 @@ t_args	parse_args(int argc, char **argv)
 		args.set = 1;
 		if (!assign_values(&args, argv, argc))
 			args.set = 0;
-		// printf("args->philo_count: %zu\n", args.philo_count);
-		// printf("args->eating_times: %zu\n", args.eating_times);
-		// printf("args->set: %zu\n", args.set);
-		// printf("args->ttd: %zu\n", args.ttd);
-		// printf("args->tte: %zu\n", args.tte);
-		// printf("args->tts: %zu\n", args.tts);
 	}
 	return (args);
 }

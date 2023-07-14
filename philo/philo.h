@@ -6,19 +6,18 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/13 23:50:26 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/14 04:04:31 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-# include "libft.h"
 # include <pthread.h>
 # include <stddef.h>
 # include <time.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include "libft.h"
+# include <unistd.h>
 
 enum e_philo_state
 {
@@ -26,8 +25,7 @@ enum e_philo_state
 	P_THINKING,
 	P_DONE,
 	P_EATING,
-	P_SLEEPING,
-	P_UNINITIALIZED
+	P_SLEEPING
 };
 
 enum e_sim_state
@@ -54,21 +52,19 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*simulation;
 	pthread_mutex_t	*print;
-	size_t			*timestamp;
 	size_t			*simulation_state;
 	size_t			*simulation_start;
 	size_t			time_since_eating;
 	unsigned int	id;
-	unsigned int	ms_state;
 	unsigned int	times_eaten;
 	unsigned char	state;
-	unsigned char	record;
-	unsigned char	eating_flag;
 }	t_philo;
 
 t_args	parse_args(int argc, char **argv);
 int		init_philos(t_philo **philos, const t_args args);
 size_t	get_current_ms(void);
 void	synchronized_sleep(size_t n_ms);
+void	ft_bzero(void *s, size_t n);
+int		ft_atoi(const char *str);
 
 #endif
