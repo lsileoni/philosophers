@@ -6,7 +6,7 @@ DEP := $(OBJ:%.o=%.d)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -Ofast -march=native -fsanitize=thread
+	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -Ofast -march=native
 
 -include $(DEP)
 

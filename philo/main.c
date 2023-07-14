@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/14 07:00:48 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/14 07:04:57 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ size_t	philo_get_timestamp(t_philo *philo)
 
 int	try_print(t_philo *philo, const char *message)
 {
-	printf("philo %d 1Locking %p\n", philo->id, philo->simulation);
+	
 	if (pthread_mutex_lock(philo->simulation) != 0)
 	{
 		printf("BAD\n");
@@ -55,20 +55,17 @@ int	try_print(t_philo *philo, const char *message)
 	{
 		if (*(philo->simulation_state) == S_DONE)
 		{
-			printf("philo %d 1Unlocking %p\n", philo->id, philo->simulation);
-			pthread_mutex_unlock(philo->simulation);
+			(void)pthread_mutex_unlock(philo->simulation);
 			return (0);
 		}
 		printf("%zu %d %s\n", philo_get_timestamp(philo), philo->id, message);
-		printf("philo %d 1Unlocking %p\n", philo->id, philo->simulation);
-		pthread_mutex_unlock(philo->simulation);
+		(void)pthread_mutex_unlock(philo->simulation);
 	}
 	return (1);
 }
 
 void	try_lock(t_philo *philo)
 {
-	printf("philo %d 2Locking %p\n", philo->id, philo->simulation);
 	if (pthread_mutex_lock(philo->simulation) != 0)
 	{
 		printf("BAD\n");
@@ -78,15 +75,13 @@ void	try_lock(t_philo *philo)
 	{
 		if (*(philo->simulation_state) == S_DONE)
 		{
-			printf("philo %d 2Unlocking %p\n", philo->id, philo->simulation);
-			pthread_mutex_unlock(philo->simulation);
+			(void)pthread_mutex_unlock(philo->simulation);
 			return ;
 		}
 		*(philo->simulation_state) = S_DONE;
 		philo->state = P_DEAD;
 		printf("%zu %d %s\n", philo_get_timestamp(philo), philo->id, "died");
-		printf("philo %d 2Unlocking %p\n", philo->id, philo->simulation);
-		pthread_mutex_unlock(philo->simulation);
+		(void)pthread_mutex_unlock(philo->simulation);
 	}
 }
 
@@ -106,7 +101,7 @@ int	try_thinking(t_philo *philo)
 		return (0);
 	if (philo->id % 2)
 	{
-		printf("philo %d 3Locking %p\n", philo->id, philo->left_fork);
+		
 		if (pthread_mutex_lock(philo->left_fork) != 0)
 		{
 			printf("BAD\n");
@@ -114,37 +109,32 @@ int	try_thinking(t_philo *philo)
 		}
 		if (try_print(philo, "has taken a fork") <= 0)
 		{
-			printf("philo %d 3Unlocking %p\n", philo->id, philo->left_fork);
-			pthread_mutex_unlock(philo->left_fork);
+			(void)pthread_mutex_unlock(philo->left_fork);
 			return (0);
 		}
 		if (philo_check_death(philo))
 		{
 			try_lock(philo);
-			printf("philo %d 3Unlocking %p\n", philo->id, philo->left_fork);
-			pthread_mutex_unlock(philo->left_fork);
+			(void)pthread_mutex_unlock(philo->left_fork);
 			return (0);
 		}
-		printf("philo %d 4Locking %p\n", philo->id, philo->right_fork);
+		
 		if (pthread_mutex_lock(philo->right_fork) != 0)
 		{
 			printf("BAD\n");
-			printf("philo %d 3Unlocking %p\n", philo->id, philo->left_fork);
-			pthread_mutex_unlock(philo->left_fork);
+			(void)pthread_mutex_unlock(philo->left_fork);
 			return (0);
 		}
 		if (try_print(philo, "has taken a fork") <= 0)
 		{
-			printf("philo %d 3Unlocking %p\n", philo->id, philo->right_fork);
-			pthread_mutex_unlock(philo->right_fork);
-			printf("philo %d 3Unlocking %p\n", philo->id, philo->left_fork);
-			pthread_mutex_unlock(philo->left_fork);
+			(void)pthread_mutex_unlock(philo->right_fork);
+			(void)pthread_mutex_unlock(philo->left_fork);
 			return (0);
 		}
 	}
 	else
 	{
-		printf("philo %d 5Locking %p\n", philo->id, philo->right_fork);
+		
 		if (pthread_mutex_lock(philo->right_fork) != 0)
 		{
 			printf("BAD\n");
@@ -152,31 +142,26 @@ int	try_thinking(t_philo *philo)
 		}
 		if (try_print(philo, "has taken a fork") <= 0)
 		{
-			printf("philo %d 3Unlocking %p\n", philo->id, philo->right_fork);
-			pthread_mutex_unlock(philo->right_fork);
+			(void)pthread_mutex_unlock(philo->right_fork);
 			return (0);
 		}
 		if (philo_check_death(philo))
 		{
 			try_lock(philo);
-			printf("philo %d 3Unlocking %p\n", philo->id, philo->right_fork);
-			pthread_mutex_unlock(philo->right_fork);
+			(void)pthread_mutex_unlock(philo->right_fork);
 			return (0);
 		}
-		printf("philo %d 6Locking %p\n", philo->id, philo->left_fork);
+		
 		if (pthread_mutex_lock(philo->left_fork) != 0)
 		{
 			printf("BAD\n");
-			printf("philo %d 3Unlocking %p\n", philo->id, philo->right_fork);
-			pthread_mutex_unlock(philo->right_fork);
+			(void)pthread_mutex_unlock(philo->right_fork);
 			return (0);
 		}
 		if (try_print(philo, "has taken a fork") <= 0)
 		{
-			printf("philo %d 3Unlocking %p\n", philo->id, philo->right_fork);
-			pthread_mutex_unlock(philo->right_fork);
-			printf("philo %d 3Unlocking %p\n", philo->id, philo->left_fork);
-			pthread_mutex_unlock(philo->left_fork);
+			(void)pthread_mutex_unlock(philo->right_fork);
+			(void)pthread_mutex_unlock(philo->left_fork);
 			return (0);
 		}
 	}
@@ -188,27 +173,21 @@ int	try_eating(t_philo *philo)
 {
 	if (try_print(philo, "is eating") <= 0)
 	{
-		printf("philo %d 4Unlocking %p\n", philo->id, philo->right_fork);
-		pthread_mutex_unlock(philo->right_fork);
-		printf("philo %d 4Unlocking %p\n", philo->id, philo->left_fork);
-		pthread_mutex_unlock(philo->left_fork);
+		(void)pthread_mutex_unlock(philo->right_fork);
+		(void)pthread_mutex_unlock(philo->left_fork);
 		return (0);
 	}
 	if (philo_check_death(philo))
 	{
 		try_lock(philo);
-		printf("philo %d 4Unlocking %p\n", philo->id, philo->right_fork);
-		pthread_mutex_unlock(philo->right_fork);
-		printf("philo %d 4Unlocking %p\n", philo->id, philo->left_fork);
-		pthread_mutex_unlock(philo->left_fork);
+		(void)pthread_mutex_unlock(philo->right_fork);
+		(void)pthread_mutex_unlock(philo->left_fork);
 		return (0);
 	}
 	philo->time_since_eating = get_current_ms();
 	synchronized_sleep(philo->params.tte);
-	printf("philo %d 4Unlocking %p\n", philo->id, philo->left_fork);
-	pthread_mutex_unlock(philo->left_fork);
-	printf("philo %d 4Unlocking %p\n", philo->id, philo->right_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	(void)pthread_mutex_unlock(philo->left_fork);
+	(void)pthread_mutex_unlock(philo->right_fork);
 	philo->times_eaten++;
 	philo->state = P_SLEEPING;
 	return (1);
@@ -236,7 +215,7 @@ void	*philosopher_simulation(void *arg)
 		return (0);
 	}
 	else
-		pthread_mutex_unlock(philo->simulation);
+		(void)pthread_mutex_unlock(philo->simulation);
 	if (philo->id % 2)
 		synchronized_sleep(5);
 	if (philo->params.philo_count == 1)
@@ -298,7 +277,7 @@ int	begin_simulation(t_philo *philos, t_args args)
 	}
 	*(philos[0].simulation_state) = S_STARTED;
 	*(philos[0].simulation_start) = get_current_ms();
-	pthread_mutex_unlock(philos[0].simulation);
+	(void)pthread_mutex_unlock(philos[0].simulation);
 	printf("SIMULATION START\n");
 	i = 0;
 	while (i < args.philo_count)
@@ -311,7 +290,7 @@ int	begin_simulation(t_philo *philos, t_args args)
 		pthread_mutex_lock(philos[0].simulation);
 		if (*(philos[0].simulation_state) == S_DONE)
 			break ;
-		pthread_mutex_unlock(philos[0].simulation);
+		(void)pthread_mutex_unlock(philos[0].simulation);
 		philos_done = 0;
 		i = 0;
 		while (i < args.philo_count)
@@ -330,7 +309,7 @@ int	begin_simulation(t_philo *philos, t_args args)
 			else
 			{
 				*(philos[0].simulation_state) = S_DONE;
-				pthread_mutex_unlock(philos[0].simulation);
+				(void)pthread_mutex_unlock(philos[0].simulation);
 			}
 		}
 	}
