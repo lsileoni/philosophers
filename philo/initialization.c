@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 19:27:39 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/14 03:46:57 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/14 05:45:43 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,6 @@ static int	init_mutexes(pthread_mutex_t *forks, pthread_mutex_t *simulation, int
 	if (pthread_mutex_init(simulation, NULL) != 0)
 	{
 		destroy_forks(i, forks);
-		return (0);
-	}
-	if (pthread_mutex_lock(simulation) != 0)
-	{
-		destroy_forks(i, forks);
-		pthread_mutex_destroy(simulation);
 		return (0);
 	}
 	return (1);

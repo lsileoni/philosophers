@@ -1,0 +1,91 @@
+SIMULATION START
+1Locking 0x7fbc84c02d50
+0 2 is thinking
+1Unlocking 0x7fbc84c02d50
+5Locking 0x7fbc84c02ad0
+1Locking 0x7fbc84c02d50
+0 2 has taken a fork
+1Unlocking 0x7fbc84c02d50
+6Locking 0x7fbc84c02a90
+1Locking 0x7fbc84c02d50
+0 2 has taken a fork
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+0 2 is eating
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+0 4 is thinking
+1Unlocking 0x7fbc84c02d50
+5Locking 0x7fbc84c02a50
+1Locking 0x7fbc84c02d50
+0 4 has taken a fork
+1Unlocking 0x7fbc84c02d50
+6Locking 0x7fbc84c02b10
+1Locking 0x7fbc84c02d50
+0 4 has taken a fork
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+0 4 is eating
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+5 3 is thinking
+1Unlocking 0x7fbc84c02d50
+3Locking 0x7fbc84c02ad0
+1Locking 0x7fbc84c02d50
+5 1 is thinking
+1Unlocking 0x7fbc84c02d50
+3Locking 0x7fbc84c02a50
+4Unlocking 0x7fbc84c02b10
+4Unlocking 0x7fbc84c02a50
+1Locking 0x7fbc84c02d50
+60 4 is sleeping
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+60 1 has taken a fork
+1Unlocking 0x7fbc84c02d50
+4Locking 0x7fbc84c02a90
+4Unlocking 0x7fbc84c02a90
+4Unlocking 0x7fbc84c02ad0
+1Locking 0x7fbc84c02d50
+60 2 is sleeping
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+60 1 has taken a fork
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+60 3 has taken a fork
+1Unlocking 0x7fbc84c02d50
+4Locking 0x7fbc84c02b10
+1Locking 0x7fbc84c02d50
+60 3 has taken a fork
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+60 3 is eating
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+60 1 is eating
+1Unlocking 0x7fbc84c02d50
+4Unlocking 0x7fbc84c02ad0
+4Unlocking 0x7fbc84c02b10
+1Locking 0x7fbc84c02d50
+120 3 is sleeping
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+120 2 is thinking
+1Unlocking 0x7fbc84c02d50
+5Locking 0x7fbc84c02ad0
+1Locking 0x7fbc84c02d50
+120 2 has taken a fork
+1Unlocking 0x7fbc84c02d50
+2Locking 0x7fbc84c02d50
+120 2 died
+2Unlocking 0x7fbc84c02d50
+3Unlocking 0x7fbc84c02ad0
+1Locking 0x7fbc84c02d50
+1Unlocking 0x7fbc84c02d50
+4Unlocking 0x7fbc84c02a50
+4Unlocking 0x7fbc84c02a90
+1Locking 0x7fbc84c02d50
+1Unlocking 0x7fbc84c02d50
+1Locking 0x7fbc84c02d50
+1Unlocking 0x7fbc84c02d50
