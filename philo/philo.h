@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/14 04:04:31 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/14 10:15:39 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,16 @@ size_t	get_current_ms(void);
 void	synchronized_sleep(size_t n_ms);
 void	ft_bzero(void *s, size_t n);
 int		ft_atoi(const char *str);
+size_t	philo_get_timestamp(t_philo *philo);
+int	try_print(t_philo *philo, const char *message);
+void	try_lock(t_philo *philo);
+int	philo_check_death(t_philo *philo);
+int	try_thinking(t_philo *philo);
+int	try_sleeping(t_philo *philo);
+int	try_eating(t_philo *philo);
+void	*simulate_one_philo(t_philo *philo);
+void	*simulate_multiple_philos(t_philo *philo);
+void	*philosopher_thread(void *arg);
+void	philo_exit(t_philo *philos);
 
 #endif

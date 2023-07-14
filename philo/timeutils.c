@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:18:56 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/14 02:55:57 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/14 07:19:24 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	synchronized_sleep(size_t n_ms)
 	size_t	start_ms;
 	size_t	end_ms;
 
+	if (!n_ms)
+		return ;
 	start_ms = get_current_ms();
 	end_ms = get_current_ms();
 	while ((end_ms - start_ms) < n_ms)

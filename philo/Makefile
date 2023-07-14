@@ -1,5 +1,5 @@
 NAME=philo
-SRC=main.c argument_parsing.c initialization.c timeutils.c parsing_helpers.c
+SRC=main.c argument_parsing.c initialization.c timeutils.c parsing_helpers.c philo_utils.c philo_actions.c philo.c
 OBJ := $(SRC:.c=.o)
 DEP := $(OBJ:%.o=%.d)
 
