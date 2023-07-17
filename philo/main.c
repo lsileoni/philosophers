@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 11:52:53 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 12:10:24 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	create_threads(t_philo *philos, t_args args, pthread_t *threads)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (i < args.philo_count)
+	while (i < (int)args.philo_count)
 	{
 		if (pthread_create(&threads[i], NULL,
 				philosopher_thread, &philos[i]) != 0)
