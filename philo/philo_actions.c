@@ -6,13 +6,13 @@
 /*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:02:40 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 11:34:40 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:30:40 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	odd_forks(t_philo *philo)
+static int	odd_forks(t_philo *philo)
 {
 	if (pthread_mutex_lock(philo->left_fork) != 0)
 		return (0);
@@ -41,7 +41,7 @@ int	odd_forks(t_philo *philo)
 	return (1);
 }
 
-int	even_forks(t_philo *philo)
+static int	even_forks(t_philo *philo)
 {
 	if (pthread_mutex_lock(philo->right_fork) != 0)
 		return (0);

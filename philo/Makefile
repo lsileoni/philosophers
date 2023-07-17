@@ -1,18 +1,25 @@
 NAME=philo
-SRC=main.c argument_parsing.c initialization.c timeutils.c parsing_helpers.c philo_utils.c philo_actions.c philo.c assignments.c
+SRC=main.c \
+	argument_parsing.c \
+	initialization.c \
+	timeutils.c \
+	parsing_helpers.c \
+	philo_utils.c \
+	philo_actions.c \
+	philo.c assignments.c
 OBJ := $(SRC:.c=.o)
 DEP := $(OBJ:%.o=%.d)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -Ofast -march=native -fsanitize=address
+	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -Ofast -march=native
 
 $(OBJ): $(SRC)
 	cc -c $(SRC) -Wall -Wextra -Werror -Ofast -march=native
 
 debug: $(OBJ)
-	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror
+	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -fsanitize=address
 
 clean:
 	rm -f $(OBJ)

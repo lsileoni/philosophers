@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 11:57:28 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:34:38 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/time.h>
+# define MAX_THREAD 512
 
 enum e_philo_state
 {
@@ -50,7 +51,6 @@ typedef struct s_philo
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*simulation;
-	pthread_mutex_t	*print;
 	size_t			*simulation_state;
 	size_t			*simulation_start;
 	size_t			time_since_eating;
@@ -72,10 +72,7 @@ int		philo_check_death(t_philo *philo);
 int		try_thinking(t_philo *philo);
 int		try_sleeping(t_philo *philo);
 int		try_eating(t_philo *philo);
-void	*simulate_one_philo(t_philo *philo);
-void	*simulate_multiple_philos(t_philo *philo);
 void	*philosopher_thread(void *arg);
-void	philo_exit(t_philo *philos);
 int		philo_check_eating_times(t_philo *philo);
 int		assign_forks(pthread_mutex_t *forks, t_philo *philos,
 			t_args args, size_t n);
