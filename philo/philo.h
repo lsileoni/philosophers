@@ -6,14 +6,13 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 15:34:38 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:01:13 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 # include <pthread.h>
-# include <stddef.h>
 # include <time.h>
 # include <stdio.h>
 # include <stdlib.h>
