@@ -1,31 +1,23 @@
-NAME=philosophers
-LIBFT=./libft/build/libft.a
-SRC=main.c argument_parsing.c initialization.c
+NAME=philo
+SRC=main.c argument_parsing.c initialization.c timeutils.c parsing_helpers.c philo_utils.c philo_actions.c philo.c assignments.c
 OBJ := $(SRC:.c=.o)
 DEP := $(OBJ:%.o=%.d)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
-	cc $(OBJ) -o philosophers -Wall -Wextra -Werror -L./libft/build -lft -I./libft/src/
-
--include $(DEP)
+$(NAME): $(OBJ)
+	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -Ofast -march=native -fsanitize=address
 
 $(OBJ): $(SRC)
-	cc -c $(SRC) -Wall -Wextra -Werror -g -I./libft/src/
+	cc -c $(SRC) -Wall -Wextra -Werror -Ofast -march=native
 
-$(LIBFT):
-	make all -C ./libft/
-
-debug: $(LIBFT) $(OBJ)
-	cc $(OBJ) -o philosophers -Wall -Wextra -Werror -L./libft/build -lft -I./libft/src/ -fsanitize=address
+debug: $(OBJ)
+	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror
 
 clean:
 	rm -f $(OBJ)
-	make clean -C ./libft/
 
 fclean:
-	make fclean -C ./libft/
 	rm -f $(OBJ)
 	rm -f $(NAME)
 

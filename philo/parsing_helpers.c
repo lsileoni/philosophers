@@ -1,14 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   parsing_helpers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/02 06:51:43 by lsileoni          #+#    #+#             */
-/*   Updated: 2022/11/07 05:31:42 by lsileoni         ###   ########.fr       */
+/*   Created: 2023/07/14 03:57:43 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/07/14 03:58:24 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "philo.h"
 
 static int	is_whitespace(char c)
 {
@@ -30,6 +32,23 @@ static int	integer_return(int is_neg, long long res)
 	if (is_neg)
 		return (res * -1);
 	return (res);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	int				i;
+	unsigned char	*p;
+
+	p = (unsigned char *)s;
+	if (n)
+	{
+		i = 0;
+		while (n--)
+		{
+			p[i] = 0;
+			i++;
+		}
+	}
 }
 
 int	ft_atoi(const char *str)
