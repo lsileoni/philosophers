@@ -6,12 +6,11 @@
 /*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:14:30 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 15:46:26 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:56:23 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stddef.h>
 
 static void	*simulate_one_philo(t_philo *philo)
 {

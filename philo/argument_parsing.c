@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:00 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 15:40:53 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:56:14 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ static int	is_digit(unsigned char c)
 
 static int	valid_number(const char *arg)
 {
+	size_t	len;
+
+	len = 0;
+	while (arg[len])
+		len++;
+	if (len > 6)
+		return (0);
 	if (*arg == '+')
 		arg++;
 	while (*arg)
