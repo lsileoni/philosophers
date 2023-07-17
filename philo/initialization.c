@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 19:27:39 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 11:52:43 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:39:37 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	destroy_forks(int i, pthread_mutex_t *forks)
 {
 	while (--i != -1)
-		pthread_mutex_destroy(&forks[i]);
+		(void)pthread_mutex_destroy(&forks[i]);
 }
 
 int	init_mutexes(pthread_mutex_t *forks,

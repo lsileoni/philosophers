@@ -6,16 +6,38 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:00 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 09:50:18 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:40:53 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+static int	is_digit(unsigned char c)
+{
+	if (c > 39 && c < 58)
+		return (1);
+	return (0);
+}
+
+static int	valid_number(const char *arg)
+{
+	if (*arg == '+')
+		arg++;
+	while (*arg)
+	{
+		if (!is_digit(*arg))
+			return (0);
+		arg++;
+	}
+	return (1);
+}
+
 static int	assign_philo_value(size_t *value, char *arg)
 {
 	int	tmp;
 
+	if (!valid_number(arg))
+		return (0);
 	tmp = ft_atoi(arg);
 	if (tmp < 1)
 		return (0);
@@ -31,6 +53,8 @@ static int	assign_values(t_args *args, char **argv, int argc)
 	while (i < argc - 1)
 	{
 		if (!assign_philo_value(&(&(args->philo_count))[i], argv[i + 1]))
+			return (0);
+		if (!i && (&(args->philo_count))[i] > MAX_THREAD)
 			return (0);
 		i++;
 	}

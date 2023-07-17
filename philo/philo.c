@@ -6,22 +6,23 @@
 /*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:14:30 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 11:57:59 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 15:36:28 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stddef.h>
 
-void	*simulate_one_philo(t_philo *philo)
+static void	*simulate_one_philo(t_philo *philo)
 {
-	try_print(philo, "is thinking");
-	try_print(philo, "has taken a fork");
+	(void)try_print(philo, "is thinking");
+	(void)try_print(philo, "has taken a fork");
 	(void)synchronized_sleep(philo, philo->params.ttd);
-	try_print(philo, "died");
+	(void)try_print(philo, "died");
 	return (NULL);
 }
 
-void	*simulate_multiple_philos(t_philo *philo)
+static void	*simulate_multiple_philos(t_philo *philo)
 {
 	unsigned char	first_iter;
 
@@ -58,10 +59,4 @@ void	*philosopher_thread(void *arg)
 	if (philo->params.philo_count == 1)
 		return (simulate_one_philo(philo));
 	return (simulate_multiple_philos(philo));
-}
-
-void	philo_exit(t_philo *philos)
-{
-	pthread_mutex_destroy(philos->simulation);
-	exit (0);
 }
