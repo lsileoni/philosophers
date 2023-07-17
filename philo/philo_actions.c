@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:02:40 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/14 10:12:16 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:34:40 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	try_thinking(t_philo *philo)
 		if (!even_forks(philo))
 			return (0);
 	}
-	philo->state = P_EATING;
 	return (1);
 }
 
@@ -104,16 +103,16 @@ int	try_eating(t_philo *philo)
 		return (0);
 	}
 	philo->time_since_eating = get_current_ms();
-	synchronized_sleep(philo->params.tte);
-	(void)pthread_mutex_unlock(philo->left_fork);
-	(void)pthread_mutex_unlock(philo->right_fork);
-	philo->times_eaten++;
-	if (philo->params.eating_times != 0 && philo->times_eaten >= philo->params.eating_times)
+	if (!synchronized_sleep(philo, philo->params.tte))
 	{
-		philo->state = P_DONE;
+		(void)pthread_mutex_unlock(philo->left_fork);
+		(void)pthread_mutex_unlock(philo->right_fork);
 		return (0);
 	}
-	philo->state = P_SLEEPING;
+	(void)pthread_mutex_unlock(philo->left_fork);
+	(void)pthread_mutex_unlock(philo->right_fork);
+	if (!philo_check_eating_times(philo))
+		return (0);
 	return (1);
 }
 
@@ -121,7 +120,7 @@ int	try_sleeping(t_philo *philo)
 {
 	if (try_print(philo, "is sleeping") <= 0)
 		return (0);
-	synchronized_sleep(philo->params.tts);
-	philo->state = P_THINKING;
+	if (!synchronized_sleep(philo, philo->params.tts))
+		return (0);
 	return (1);
 }

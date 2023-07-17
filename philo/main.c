@@ -6,18 +6,11 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/14 10:15:47 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:52:53 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <pthread.h>
-#include <stddef.h>
-#include <errno.h>
-#include <sys/_pthread/_pthread_t.h>
-#include <time.h>
-#include <stdio.h>
-#include <sys/time.h>
 
 void	create_threads(t_philo *philos, t_args args, pthread_t *threads)
 {
@@ -26,7 +19,8 @@ void	create_threads(t_philo *philos, t_args args, pthread_t *threads)
 	i = 0;
 	while (i < args.philo_count)
 	{
-		if (pthread_create(&threads[i], NULL, philosopher_thread, &philos[i]) != 0)
+		if (pthread_create(&threads[i], NULL,
+				philosopher_thread, &philos[i]) != 0)
 		{
 			while (--i >= 0)
 				pthread_detach(threads[i]);

@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 10:14:30 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/14 10:14:54 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:57:59 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ void	*simulate_one_philo(t_philo *philo)
 {
 	try_print(philo, "is thinking");
 	try_print(philo, "has taken a fork");
-	synchronized_sleep(philo->params.ttd);
+	(void)synchronized_sleep(philo, philo->params.ttd);
 	try_print(philo, "died");
-	philo->state = P_DEAD;
 	return (NULL);
 }
 
@@ -30,18 +29,16 @@ void	*simulate_multiple_philos(t_philo *philo)
 	philo->time_since_eating = get_current_ms();
 	while (philo->state != P_DONE)
 	{
-		if (philo->state == P_THINKING)
-		{
-			if (philo->params.philo_count % 2 && first_iter)
-				synchronized_sleep(philo->params.tte - 10);
-			if (!try_thinking(philo))
+		if (philo->params.philo_count % 2 && first_iter)
+			if (!synchronized_sleep(philo, philo->params.tte - 10))
 				return (NULL);
-			if (!try_eating(philo))
-				return (NULL);
-			if (!try_sleeping(philo))
-				return (NULL);
-			first_iter = 1;
-		}
+		if (!try_thinking(philo))
+			return (NULL);
+		if (!try_eating(philo))
+			return (NULL);
+		if (!try_sleeping(philo))
+			return (NULL);
+		first_iter = 1;
 	}
 	return (NULL);
 }
@@ -56,9 +53,10 @@ void	*philosopher_thread(void *arg)
 	else
 		(void)pthread_mutex_unlock(philo->simulation);
 	if (philo->id % 2)
-		synchronized_sleep(5);
+		if (!synchronized_sleep(philo, 5))
+			return (NULL);
 	if (philo->params.philo_count == 1)
-		return(simulate_one_philo(philo));
+		return (simulate_one_philo(philo));
 	return (simulate_multiple_philos(philo));
 }
 
@@ -67,4 +65,3 @@ void	philo_exit(t_philo *philos)
 	pthread_mutex_destroy(philos->simulation);
 	exit (0);
 }
-
