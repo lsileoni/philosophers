@@ -7,25 +7,21 @@ SRC=main.c \
 	philo_utils.c \
 	philo_actions.c \
 	philo.c assignments.c
+INCLUDE=./philo.h
 OBJ := $(SRC:.c=.o)
-DEP := $(OBJ:%.o=%.d)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -Ofast -march=native
+	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -I$(INCLUDE)
 
 $(OBJ): $(SRC)
-	cc -c $(SRC) -Wall -Wextra -Werror -Ofast -march=native
-
-debug: $(OBJ)
-	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -fsanitize=address
+	cc -c $(SRC) -Wall -Wextra -Werror
 
 clean:
 	rm -f $(OBJ)
 
-fclean:
-	rm -f $(OBJ)
+fclean: clean
 	rm -f $(NAME)
 
 re: fclean all

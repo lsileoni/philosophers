@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 15:41:08 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:21:44 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	create_threads(t_philo *philos, t_args args, pthread_t *threads)
 	}
 }
 
-static int	begin_simulation(t_philo *philos, t_args args)
+static void	begin_simulation(t_philo *philos, t_args args)
 {
 	size_t		i;
 	pthread_t	*threads;
@@ -75,7 +75,7 @@ static int	begin_simulation(t_philo *philos, t_args args)
 		i++;
 	}
 	free(threads);
-	return (1);
+	philo_cleanup(philos);
 }
 
 int	main(int argc, char **argv)
@@ -87,8 +87,6 @@ int	main(int argc, char **argv)
 		return (printf("Issue in parsing arguments!\n"));
 	if (!init_philos(&philos, args))
 		return (printf("Issue in initializing philosophers!\n"));
-	if (!begin_simulation(philos, args))
-		return (printf("Issue in beginning the simulation!\n"));
-	philo_cleanup(philos);
+	begin_simulation(philos, args);
 	return (0);
 }

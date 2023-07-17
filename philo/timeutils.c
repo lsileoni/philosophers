@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:18:56 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 11:53:02 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/17 16:07:48 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ size_t	get_current_ms(void)
 {
 	struct timeval	val;
 
-	gettimeofday(&val, NULL);
+	(void)gettimeofday(&val, NULL);
 	return ((val.tv_sec * 1000) + (val.tv_usec / 1000));
 }
 
@@ -38,7 +38,7 @@ int	synchronized_sleep(t_philo *philo, size_t n_ms)
 		}
 		if (*(philo->simulation_state) == S_DONE)
 			return (0);
-		usleep(250);
+		(void)usleep(250);
 		end_ms = get_current_ms();
 	}
 	return (1);
