@@ -13,10 +13,10 @@ OBJ := $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -Ofast -march=native -I$(INCLUDE)
+	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -I$(INCLUDE)
 
 $(OBJ): $(SRC)
-	cc -c $(SRC) -Wall -Wextra -Werror -Ofast -march=native
+	cc -c $(SRC) -Wall -Wextra -Werror
 
 clean:
 	rm -f $(OBJ)
