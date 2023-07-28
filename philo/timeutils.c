@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   timeutils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
+/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/13 22:18:56 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 16:07:48 by lsileoni         ###   ########.fr       */
+/*   Created: 2023/07/28 22:40:51 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/07/28 22:40:52 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	synchronized_sleep(t_philo *philo, size_t n_ms)
 			try_lock(philo);
 			return (0);
 		}
-		if (*(philo->simulation_state) == S_DONE)
+		if (*(philo->vars->simulation_state) == S_DONE)
 			return (0);
 		(void)usleep(250);
 		end_ms = get_current_ms();

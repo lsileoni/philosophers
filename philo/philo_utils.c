@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
+/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/14 09:20:15 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 11:58:13 by lsileoni         ###   ########.fr       */
+/*   Created: 2023/07/28 22:40:28 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/07/28 22:40:29 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,42 @@
 
 size_t	philo_get_timestamp(t_philo *philo)
 {
-	return (get_current_ms() - *(philo->simulation_start));
+	return (get_current_ms() - *(philo->vars->simulation_start));
 }
 
 int	try_print(t_philo *philo, const char *message)
 {
-	if (pthread_mutex_lock(philo->simulation) != 0)
+	if (pthread_mutex_lock(philo->vars->simulation) != 0)
 		return (0);
 	else
 	{
-		if (*(philo->simulation_state) == S_DONE)
+		if (*(philo->vars->simulation_state) == S_DONE)
 		{
-			(void)pthread_mutex_unlock(philo->simulation);
+			(void)pthread_mutex_unlock(philo->vars->simulation);
 			return (0);
 		}
 		(void)printf("%zu %d %s\n", philo_get_timestamp(philo),
 			philo->id, message);
-		(void)pthread_mutex_unlock(philo->simulation);
+		(void)pthread_mutex_unlock(philo->vars->simulation);
 	}
 	return (1);
 }
 
 void	try_lock(t_philo *philo)
 {
-	if (pthread_mutex_lock(philo->simulation) != 0)
+	if (pthread_mutex_lock(philo->vars->simulation) != 0)
 		return ;
 	else
 	{
-		if (*(philo->simulation_state) == S_DONE)
+		if (*(philo->vars->simulation_state) == S_DONE)
 		{
-			(void)pthread_mutex_unlock(philo->simulation);
+			(void)pthread_mutex_unlock(philo->vars->simulation);
 			return ;
 		}
-		*(philo->simulation_state) = S_DONE;
+		*(philo->vars->simulation_state) = S_DONE;
 		(void)printf("%zu %d %s\n", philo_get_timestamp(philo),
 			philo->id, "died");
-		(void)pthread_mutex_unlock(philo->simulation);
+		(void)pthread_mutex_unlock(philo->vars->simulation);
 	}
 }
 

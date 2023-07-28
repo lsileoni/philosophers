@@ -1,22 +1,23 @@
 NAME=philo
 SRC=main.c \
 	argument_parsing.c \
-	initialization.c \
 	timeutils.c \
+	simulation.c \
 	parsing_helpers.c \
 	philo_utils.c \
 	philo_actions.c \
 	philo.c assignments.c
 INCLUDE=./philo.h
-OBJ := $(SRC:.c=.o)
+OBJ:=$(SRC:.c=.o)
+CFLAGS=-Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -I$(INCLUDE)
+	cc $(OBJ) -o $(NAME) $(CFLAGS) -I$(INCLUDE) -g
 
-$(OBJ): $(SRC)
-	cc -c $(SRC) -Wall -Wextra -Werror
+%.o: %.c
+	cc -c $< -o $@ $(CFLAGS) -I$(INCLUDE) -g
 
 clean:
 	rm -f $(OBJ)

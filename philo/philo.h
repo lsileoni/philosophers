@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 16:01:13 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/07/28 22:36:06 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,19 @@ enum e_sim_state
 	S_DONE
 };
 
+typedef struct s_mux_pair
+{
+	pthread_mutex_t	mux;
+	unsigned int	val;
+}					t_mux_pair;
+
+typedef struct s_sim_vars
+{
+	pthread_mutex_t	*simulation;
+	size_t			*simulation_state;
+	size_t			*simulation_start;
+}			t_sim_vars;
+
 typedef struct s_args
 {
 	size_t			philo_count;
@@ -47,11 +60,9 @@ typedef struct s_args
 typedef struct s_philo
 {
 	t_args			params;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*simulation;
-	size_t			*simulation_state;
-	size_t			*simulation_start;
+	t_mux_pair		*left_fork;
+	t_mux_pair		*right_fork;
+	t_sim_vars		*vars;
 	size_t			time_since_eating;
 	unsigned int	id;
 	unsigned int	times_eaten;
@@ -59,7 +70,7 @@ typedef struct s_philo
 }					t_philo;
 
 t_args	parse_args(int argc, char **argv);
-int		init_philos(t_philo **philos, const t_args args);
+int	init_simulation(const t_args args, size_t *sim_state, size_t *sim_start);
 size_t	get_current_ms(void);
 int		synchronized_sleep(t_philo *philo, size_t n_ms);
 void	ft_bzero(void *s, size_t n);
@@ -73,11 +84,8 @@ int		try_sleeping(t_philo *philo);
 int		try_eating(t_philo *philo);
 void	*philosopher_thread(void *arg);
 int		philo_check_eating_times(t_philo *philo);
-int		assign_forks(pthread_mutex_t *forks, t_philo *philos,
-			t_args args, size_t n);
-int		allocate_philo_vars(size_t **simulation_state,
-			size_t **simulation_start, pthread_mutex_t **simulation);
-int		init_mutexes(pthread_mutex_t *forks,
-			pthread_mutex_t *simulation, int n);
+int	assign_forks(t_mux_pair *forks, t_philo *philos,
+						t_args args, t_sim_vars *vars);
+void	destroy_forks(t_mux_pair *forks, size_t n);
 
 #endif
