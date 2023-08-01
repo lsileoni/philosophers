@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:00 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/01 06:11:46 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/01 07:30:10 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_digit(unsigned char c)
 {
-	if (c > 47 && c < 58)
+	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
 }
@@ -54,7 +54,7 @@ static int	assign_philo_value(size_t *value, char *arg)
 
 static int	assign_values(t_args *args, char **argv, int argc)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (i < argc - 1)
