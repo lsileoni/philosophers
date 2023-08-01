@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/01 06:28:41 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/01 07:02:10 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static int	begin_simulation(t_philo *philos, t_args args)
 	return (1);
 }
 
-static int	init_simulation(const t_args args, size_t *sim_state, size_t *sim_start)
+static int	init_simulation(const t_args args, size_t *sim_state,
+		size_t *sim_start)
 {
 	static t_philo			philos[MAX_THREAD];
 	static t_mux_pair		forks[MAX_THREAD];
