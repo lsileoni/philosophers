@@ -6,7 +6,7 @@
 #    By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 05:16:02 by lsileoni          #+#    #+#              #
-#    Updated: 2023/08/01 06:32:11 by lsileoni         ###   ########.fr        #
+#    Updated: 2023/08/01 06:46:50 by lsileoni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,17 +19,16 @@ SRC=main.c \
 	philo_checks.c \
 	philo_actions.c \
 	philo.c assignments.c
-INCLUDE=./philo.h
 OBJ:=$(SRC:.c=.o)
 CFLAGS=-Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(OBJ) -o $(NAME) $(CFLAGS) -I$(INCLUDE) -g
+	cc $(OBJ) -o $(NAME) $(CFLAGS)
 
 %.o: %.c
-	cc -c $< -o $@ $(CFLAGS) -I$(INCLUDE) -g
+	cc -c $< -o $@ $(CFLAGS)
 
 clean:
 	rm -f $(OBJ)
