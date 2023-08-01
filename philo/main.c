@@ -6,13 +6,13 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/01 07:02:10 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/01 07:30:43 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	create_threads(t_philo *philos, t_args args, pthread_t *threads)
+static int	create_threads(t_philo *philos, t_args args, pthread_t *threads)
 {
 	int	i;
 
@@ -22,11 +22,15 @@ static void	create_threads(t_philo *philos, t_args args, pthread_t *threads)
 		if (pthread_create(&threads[i], NULL,
 				philosopher_thread, &philos[i]) != 0)
 		{
-			while (--i >= 0)
+			*(philos[0].vars->simulation_state) = S_FAILURE;
+			(void)pthread_mutex_unlock(philos[0].vars->simulation);
+			while (--i > -1)
 				(void)pthread_detach(threads[i]);
+			return (0);
 		}
 		i++;
 	}
+	return (1);
 }
 
 static int	begin_simulation(t_philo *philos, t_args args)
@@ -36,7 +40,8 @@ static int	begin_simulation(t_philo *philos, t_args args)
 
 	if (pthread_mutex_lock(philos[0].vars->simulation) != 0)
 		return (0);
-	create_threads(philos, args, threads);
+	if (!create_threads(philos, args, threads))
+		return (0);
 	*(philos[0].vars->simulation_state) = S_STARTED;
 	*(philos[0].vars->simulation_start) = get_current_ms();
 	(void)pthread_mutex_unlock(philos[0].vars->simulation);
@@ -64,11 +69,11 @@ static int	init_simulation(const t_args args, size_t *sim_state,
 	if (!begin_simulation(philos, args))
 	{
 		destroy_forks(forks, args.philo_count);
-		pthread_mutex_destroy(&simulation);
+		(void)pthread_mutex_destroy(&simulation);
 		return (0);
 	}
 	destroy_forks(forks, args.philo_count);
-	pthread_mutex_destroy(&simulation);
+	(void)pthread_mutex_destroy(&simulation);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/01 06:31:11 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/01 07:23:01 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ enum e_sim_state
 {
 	S_UNINITIALIZED,
 	S_STARTED,
-	S_DONE
+	S_DONE,
+	S_FAILURE
 };
 
 typedef struct s_mux_pair

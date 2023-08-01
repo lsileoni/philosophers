@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 22:40:21 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/01 06:04:11 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/01 07:18:10 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	odd_forks(t_philo *philo)
 {
 	if (!take_fork(philo->left_fork, philo))
 		return (0);
-	if (try_print(philo, "has taken a fork") <= 0)
+	if (!try_print(philo, "has taken a fork"))
 	{
 		put_fork_down(philo->left_fork);
 		return (0);
@@ -26,7 +26,7 @@ static int	odd_forks(t_philo *philo)
 		put_fork_down(philo->left_fork);
 		return (0);
 	}
-	if (try_print(philo, "has taken a fork") <= 0)
+	if (!try_print(philo, "has taken a fork"))
 	{
 		put_fork_down(philo->left_fork);
 		put_fork_down(philo->right_fork);
@@ -39,7 +39,7 @@ static int	even_forks(t_philo *philo)
 {
 	if (!take_fork(philo->right_fork, philo))
 		return (0);
-	if (try_print(philo, "has taken a fork") <= 0)
+	if (!try_print(philo, "has taken a fork"))
 	{
 		put_fork_down(philo->right_fork);
 		return (0);
@@ -49,7 +49,7 @@ static int	even_forks(t_philo *philo)
 		put_fork_down(philo->right_fork);
 		return (0);
 	}
-	if (try_print(philo, "has taken a fork") <= 0)
+	if (!try_print(philo, "has taken a fork"))
 	{
 		put_fork_down(philo->right_fork);
 		put_fork_down(philo->left_fork);
@@ -77,7 +77,7 @@ int	try_thinking(t_philo *philo)
 
 int	try_eating(t_philo *philo)
 {
-	if (try_print(philo, "is eating") <= 0)
+	if (!try_print(philo, "is eating"))
 	{
 		put_fork_down(philo->right_fork);
 		put_fork_down(philo->left_fork);
@@ -106,7 +106,7 @@ int	try_eating(t_philo *philo)
 
 int	try_sleeping(t_philo *philo)
 {
-	if (try_print(philo, "is sleeping") <= 0)
+	if (!try_print(philo, "is sleeping"))
 		return (0);
 	if (!synchronized_sleep(philo, philo->params.tts))
 		return (0);

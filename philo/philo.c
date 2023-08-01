@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 22:40:03 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/01 06:37:33 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/01 07:28:06 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,12 @@ void	*philosopher_thread(void *arg)
 	philo = arg;
 	if (pthread_mutex_lock(philo->vars->simulation) != 0)
 		return (0);
-	else
+	if (*(philo->vars->simulation_state) == S_FAILURE)
+	{
 		(void)pthread_mutex_unlock(philo->vars->simulation);
+		return (NULL);
+	}
+	(void)pthread_mutex_unlock(philo->vars->simulation);
 	if (!(philo->params.philo_count % 2) && philo->id % 2)
 		if (!synchronized_sleep(philo, 5))
 			return (NULL);
