@@ -6,32 +6,24 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 22:40:28 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/28 22:40:29 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/01 06:23:51 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-size_t	philo_get_timestamp(t_philo *philo)
-{
-	return (get_current_ms() - *(philo->vars->simulation_start));
-}
-
 int	try_print(t_philo *philo, const char *message)
 {
 	if (pthread_mutex_lock(philo->vars->simulation) != 0)
 		return (0);
-	else
+	if (*(philo->vars->simulation_state) == S_DONE)
 	{
-		if (*(philo->vars->simulation_state) == S_DONE)
-		{
-			(void)pthread_mutex_unlock(philo->vars->simulation);
-			return (0);
-		}
-		(void)printf("%zu %d %s\n", philo_get_timestamp(philo),
-			philo->id, message);
 		(void)pthread_mutex_unlock(philo->vars->simulation);
+		return (0);
 	}
+	(void)printf("%zu %d %s\n", philo_get_timestamp(philo),
+		philo->id, message);
+	(void)pthread_mutex_unlock(philo->vars->simulation);
 	return (1);
 }
 
@@ -39,36 +31,57 @@ void	try_lock(t_philo *philo)
 {
 	if (pthread_mutex_lock(philo->vars->simulation) != 0)
 		return ;
-	else
+	if (*(philo->vars->simulation_state) == S_DONE)
 	{
-		if (*(philo->vars->simulation_state) == S_DONE)
-		{
-			(void)pthread_mutex_unlock(philo->vars->simulation);
-			return ;
-		}
-		*(philo->vars->simulation_state) = S_DONE;
-		(void)printf("%zu %d %s\n", philo_get_timestamp(philo),
-			philo->id, "died");
 		(void)pthread_mutex_unlock(philo->vars->simulation);
+		return ;
 	}
+	*(philo->vars->simulation_state) = S_DONE;
+	(void)printf("%zu %d %s\n", philo_get_timestamp(philo),
+		philo->id, "died");
+	(void)pthread_mutex_unlock(philo->vars->simulation);
 }
 
-int	philo_check_eating_times(t_philo *philo)
+int	take_fork(t_mux_pair *fork, t_philo *philo)
 {
-	philo->times_eaten++;
-	if (philo->params.eating_times != 0 && \
-		philo->times_eaten >= philo->params.eating_times)
+	while (1)
 	{
-		philo->state = P_DONE;
-		return (0);
+		if (philo_check_death(philo))
+		{
+			try_lock(philo);
+			return (0);
+		}
+		if (pthread_mutex_lock(&fork->mux) != 0)
+			return (0);
+		if (fork->val == 0)
+		{
+			fork->val = 1;
+			(void)pthread_mutex_unlock(&fork->mux);
+			break ;
+		}
+		(void)pthread_mutex_unlock(&fork->mux);
+		(void)usleep(300);
 	}
 	return (1);
 }
 
-int	philo_check_death(t_philo *philo)
+int	put_fork_down(t_mux_pair *fork)
 {
-	if (philo->time_since_eating != 0 && \
-		(get_current_ms() - philo->time_since_eating) >= philo->params.ttd)
-		return (1);
-	return (0);
+	if (pthread_mutex_lock(&fork->mux) != 0)
+		return (0);
+	fork->val = 0;
+	(void)pthread_mutex_unlock(&fork->mux);
+	return (1);
+}
+
+void	destroy_forks(t_mux_pair *forks, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		(void)pthread_mutex_destroy(&(forks[i].mux));
+		i++;
+	}
 }

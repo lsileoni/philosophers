@@ -6,13 +6,14 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 22:39:04 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/28 22:39:05 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/01 05:40:24 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	assign_philo_vars(t_philo *philo, t_sim_vars *vars, t_mux_pair *left_fork, t_mux_pair *right_fork)
+static void	assign_philo_vars(t_philo *philo, t_sim_vars *vars,
+		t_mux_pair *left_fork, t_mux_pair *right_fork)
 {
 	philo->left_fork = left_fork;
 	philo->right_fork = right_fork;
