@@ -1,22 +1,34 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/08/01 05:16:02 by lsileoni          #+#    #+#              #
+#    Updated: 2023/08/01 06:46:50 by lsileoni         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME=philo
 SRC=main.c \
 	argument_parsing.c \
-	initialization.c \
 	timeutils.c \
 	parsing_helpers.c \
 	philo_utils.c \
+	philo_checks.c \
 	philo_actions.c \
 	philo.c assignments.c
-INCLUDE=./philo.h
-OBJ := $(SRC:.c=.o)
+OBJ:=$(SRC:.c=.o)
+CFLAGS=-Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(OBJ) -o $(NAME) -Wall -Wextra -Werror -I$(INCLUDE)
+	cc $(OBJ) -o $(NAME) $(CFLAGS)
 
-$(OBJ): $(SRC)
-	cc -c $(SRC) -Wall -Wextra -Werror
+%.o: %.c
+	cc -c $< -o $@ $(CFLAGS)
 
 clean:
 	rm -f $(OBJ)
@@ -25,3 +37,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re

@@ -6,35 +6,11 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:24:01 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 16:21:44 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/01 06:28:41 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static void	destroy_forks(pthread_mutex_t *forks, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		(void)pthread_mutex_destroy(&forks[i]);
-		i++;
-	}
-}
-
-static void	philo_cleanup(t_philo *philos)
-{
-	(void)pthread_mutex_destroy(philos->simulation);
-	(void)destroy_forks(philos[0].left_fork, philos[0].params.philo_count);
-	free(philos[0].simulation);
-	free(philos[0].simulation_state);
-	free(philos[0].simulation_start);
-	free(philos[0].left_fork);
-	free(&philos[0]);
-	exit (0);
-}
 
 static void	create_threads(t_philo *philos, t_args args, pthread_t *threads)
 {
@@ -48,45 +24,62 @@ static void	create_threads(t_philo *philos, t_args args, pthread_t *threads)
 		{
 			while (--i >= 0)
 				(void)pthread_detach(threads[i]);
-			philo_cleanup(philos);
 		}
 		i++;
 	}
 }
 
-static void	begin_simulation(t_philo *philos, t_args args)
+static int	begin_simulation(t_philo *philos, t_args args)
 {
+	pthread_t	threads[MAX_THREAD];
 	size_t		i;
-	pthread_t	*threads;
 
-	threads = malloc(sizeof(pthread_t) * args.philo_count);
-	if (!threads)
-		philo_cleanup(philos);
-	if (pthread_mutex_lock(philos[0].simulation) != 0)
-		philo_cleanup(philos);
+	if (pthread_mutex_lock(philos[0].vars->simulation) != 0)
+		return (0);
 	create_threads(philos, args, threads);
-	*(philos[0].simulation_state) = S_STARTED;
-	*(philos[0].simulation_start) = get_current_ms();
-	(void)pthread_mutex_unlock(philos[0].simulation);
+	*(philos[0].vars->simulation_state) = S_STARTED;
+	*(philos[0].vars->simulation_start) = get_current_ms();
+	(void)pthread_mutex_unlock(philos[0].vars->simulation);
 	i = 0;
 	while (i < args.philo_count)
 	{
 		(void)pthread_join(threads[i], NULL);
 		i++;
 	}
-	free(threads);
-	philo_cleanup(philos);
+	return (1);
+}
+
+static int	init_simulation(const t_args args, size_t *sim_state, size_t *sim_start)
+{
+	static t_philo			philos[MAX_THREAD];
+	static t_mux_pair		forks[MAX_THREAD];
+	static pthread_mutex_t	simulation;
+	static t_sim_vars		vars = {&simulation, 0, 0};
+
+	vars.simulation_state = sim_state;
+	vars.simulation_start = sim_start;
+	if (!assign_forks(forks, philos, args, &vars))
+		return (0);
+	if (!begin_simulation(philos, args))
+	{
+		destroy_forks(forks, args.philo_count);
+		pthread_mutex_destroy(&simulation);
+		return (0);
+	}
+	destroy_forks(forks, args.philo_count);
+	pthread_mutex_destroy(&simulation);
+	return (1);
 }
 
 int	main(int argc, char **argv)
 {
 	const t_args	args = parse_args(argc, argv);
-	t_philo			*philos;
+	size_t			simulation_state;
+	size_t			simulation_start;
 
 	if (!args.set)
 		return (printf("Issue in parsing arguments!\n"));
-	if (!init_philos(&philos, args))
-		return (printf("Issue in initializing philosophers!\n"));
-	begin_simulation(philos, args);
+	if (!init_simulation(args, &simulation_state, &simulation_start))
+		return (printf("Issue in initializing simulation!\n"));
 	return (0);
 }

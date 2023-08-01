@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_helpers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsileoni <lsileoni@gmail.hive.fi>          +#+  +:+       +#+        */
+/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/14 03:57:43 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/14 03:58:24 by lsileoni         ###   ########.fr       */
+/*   Created: 2023/07/28 22:39:52 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/07/28 22:39:53 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

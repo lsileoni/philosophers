@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 14:14:00 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/07/17 15:56:14 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/01 06:11:46 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_digit(unsigned char c)
 {
-	if (c > 39 && c < 58)
+	if (c > 47 && c < 58)
 		return (1);
 	return (0);
 }
