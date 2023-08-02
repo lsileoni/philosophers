@@ -20,13 +20,7 @@ static void	*simulate_philo(t_philo *philo)
 	philo->time_since_eating = get_current_ms();
 	while (philo->state != P_DONE)
 	{
-		if (philo->params.philo_count % 2 && first_iter)
-		{
-			if (philo->params.tte >= 10 && \
-					!synchronized_sleep(philo, philo->params.tte - 10))
-				return (NULL);
-		}
-		if (!try_thinking(philo))
+		if (!try_thinking(philo, first_iter))
 			return (NULL);
 		if (!try_eating(philo))
 			return (NULL);

@@ -58,10 +58,16 @@ static int	even_forks(t_philo *philo)
 	return (1);
 }
 
-int	try_thinking(t_philo *philo)
+int	try_thinking(t_philo *philo, unsigned char first_iter)
 {
 	if (!try_print(philo, "is thinking"))
 		return (0);
+	if (philo->params.philo_count % 2 && first_iter)
+	{
+		if (philo->params.tte >= 10 && \
+				!synchronized_sleep(philo, philo->params.tte - 10))
+			return (0);
+	}
 	if (philo->id % 2)
 	{
 		if (!odd_forks(philo))

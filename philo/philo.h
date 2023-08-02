@@ -78,7 +78,7 @@ size_t	philo_get_timestamp(t_philo *philo);
 int		try_print(t_philo *philo, const char *message);
 void	try_lock(t_philo *philo);
 int		philo_check_death(t_philo *philo);
-int		try_thinking(t_philo *philo);
+int		try_thinking(t_philo *philo, unsigned char first_iter);
 int		try_sleeping(t_philo *philo);
 int		try_eating(t_philo *philo);
 void	*philosopher_thread(void *arg);
